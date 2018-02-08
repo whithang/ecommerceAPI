@@ -31,7 +31,7 @@ CREATE TABLE orders (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (status_id) REFERENCES status(id),
-  FOREIGN KEY (customer_id) REFERENCES customer(id)
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
 CREATE TABLE products (
@@ -66,7 +66,7 @@ FOREIGN KEY (product_id) REFERENCES products(id),
 FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
-INSERT INTO customer (id, customer_first_name, customer_last_name, address, city, state, zip, phone, email, password) VALUES
+INSERT INTO customers (id, customer_first_name, customer_last_name, address, city, state, zip, phone, email, password) VALUES
   (1, 'Billy', 'Bob', '123 Main St', 'San Francisco', 'CA', '94115', '4151234567', 'billy@bob.com', SHA2('billysPasswordcPjfn67sdv', 0)),
   (2, 'Sally', 'Sal', '590 Front Ave', 'Miami', 'FL', '33139', '3054128900', 'sally@sal.com', SHA2('sallysPassword8nJHBh665v', 0)),
   (3, 'David', 'Drummer', '9000 Big Bend', 'Reno', 'NV', '01229', '6169098765', 'david45@gmail.com', SHA2('davidsPasswordvByt76912s', 0));
