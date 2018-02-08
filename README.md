@@ -30,6 +30,12 @@ ensure `mysql` is running before executing the application. start the server wit
 
 `mysql.server start`
 
+to create and populate the database, run this command from the command line:
+`mysql -u <USER> < schema.sql`
+OR
+`mysql -u <USER> -p < schema.sql`
+<USER> may be `root`
+
 ## Running the App
 
 To run server: `npm run start`
