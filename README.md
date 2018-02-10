@@ -17,6 +17,10 @@ Ecommerce API for Shipt coding exercise
 
 ## Assumptions
 
+1. Anything saved as a customer order is a sold product. There is no persisted state of a shopping cart holding products in an order which are not yet sold.
+2. In the API for task #4 above, productsSold in the server/controllers.js file,
+the groupType represents sorting by 'day', 'week', or 'month' identified by an
+index of 0, 1, or 2 respectively.
 
 ## Answers to Additional Questions
 

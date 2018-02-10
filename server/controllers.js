@@ -19,22 +19,27 @@ exports.customerOrders = function(req, res) {
 };
 
 exports.productsSold = function(req, res) {
-  db.productsSold(function(err, result) {
-    if (err) {
-      res.send(err);
-    }
-    res.json(result);
-  });
+  //0 = by day, 1 = by week, 2 = by month
+  if (req.params.type === 0) {
+    db.productsSoldByDay(req.params.start, req.params.end, function(err, result) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(result);
+    });
+  } else if (req.params.type === 1) {
+    db.productsSoldByWeek(req.params.start, req.params.end, function(err, result) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(result);
+    });
+  } else {
+    db.productsSoldByMonth(req.params.start, req.params.end, function(err, result) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(result);
+    });
+  }
 };
-// module.exports = function(app) {
-//   var reports = require('../controllers/reports');
-//
-//   app.route('/orders')
-//     .get(reports.customerProductsSoldByCategory);
-//
-//   app.route('/orders/:id')
-//     .get(reports.customerOrders);
-//
-//   app.route('/products')
-//     .get(reports.productsSold);
-// };
