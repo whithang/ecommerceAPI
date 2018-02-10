@@ -7,8 +7,13 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+
 var routes = require('./server/routes');
 routes(app);
+
+app.use(function(req, res) {
+  res.status(404).send({url: req.originalUrl + ' not found'});
+});
 
 app.listen(port, function() {
   console.log('ecommerceAPI server started on ' + port);

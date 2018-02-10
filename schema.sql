@@ -34,6 +34,12 @@ CREATE TABLE orders (
   FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
+/*
+select orders.id as order_id, customer_first_name + ' ' + customer_last_name as customer_name,
+status, created_at from (select * from orders left join status on status.id = status_id)
+left join customers where customer_id = customers.id ;
+*/
+
 CREATE TABLE products (
 id int PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(15),

@@ -25,8 +25,12 @@ module.exports.customerProductsByCategory = function(callback) {
   });
 };
 
-module.exports.customerOrders = function(callback) {
-  connection.query('xx', function(err, results, fields) {
+module.exports.customerOrders = function(id, callback) {
+  connection.query('select O.id as order_id, customer_first_name, status, O.created_at ' +
+  'from (select customer_id, status, orders.id, created_at from orders left join status ' +
+  'on status.id = status_id) O left join customers on O.customer_id = customers.id ' +
+  'where customer_id = ' + id,
+  function(err, results, fields) {
     if (err) {
       callback(err, null);
     } else {
