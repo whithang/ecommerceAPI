@@ -15,6 +15,9 @@ Ecommerce API for Shipt coding exercise
 5. Export to CSV capability for the above results
 6. API endpoint returning orders for a customer
 
+## Assumptions
+
+
 ## Answers to Additional Questions
 
 1. TODO - attach sketch

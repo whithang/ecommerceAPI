@@ -105,10 +105,3 @@ INSERT INTO product_categories (id, product_id, category_id) VALUES
   (3, 2, 3),
   (4, 3, 2),
   (5, 3, 4);
-
-/*working query solution
-select customer_id, customer_first_name, category_id, category_name, sum(quantity) as number_purchased from orders left join customers
-on customers.id = orders.customer_id left join order_products on order_products.order_id = orders.id left join
-product_categories on product_categories.product_id = order_products.product_id left join categories
-on categories.id = product_categories.category_id group by category_id, category_name, customer_id, customer_first_name;
-*/
