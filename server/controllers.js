@@ -1,4 +1,4 @@
-var db = require('../db');
+var db = require('./../db/db');
 
 exports.customerProductsSoldByCategory = function(req, res) {
   db.customerProductsByCategory(function(err, result) {
