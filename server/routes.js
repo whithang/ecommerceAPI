@@ -7,6 +7,7 @@ module.exports = function(app) {
   app.route('/orders/:id')
     .get(reports.customerOrders);
 
-  app.route('/products')
+  app.route('/products/:type')
     .get(reports.productsSold);
+    
 };

@@ -21,11 +21,15 @@ Ecommerce API for Shipt coding exercise
 2. In the API for task #4 above, productsSold in the server/controllers.js file,
 the groupType represents sorting by 'day', 'week', or 'month' identified by an
 index of 0, 1, or 2 respectively.
+3. The format for calling APIs that require input is: http://localhost:3000/<endpoint>?<param1>=''&<param2>=''&<param3>=
+4. start and end dates for the API should be in the format 'YYYYMMDD'
+5. Assumption that start and end date are valid entries
 
 ## Answers to Additional Questions
 
 1. TODO - attach sketch
 2. TODO
+Would write code to ensure that user data entry was valid to avoid malicious input
 
 ## Requirements
 

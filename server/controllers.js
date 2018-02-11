@@ -19,27 +19,29 @@ exports.customerOrders = function(req, res) {
 };
 
 exports.productsSold = function(req, res) {
-  //0 = by day, 1 = by week, 2 = by month
-  if (req.params.type === 0) {
-    db.productsSoldByDay(req.params.start, req.params.end, function(err, result) {
+  if (req.params.type === '0') {
+    db.productsSoldByDay(req.query.start, req.query.end, function(err, result) {
       if (err) {
         res.send(err);
       }
       res.json(result);
     });
-  } else if (req.params.type === 1) {
-    db.productsSoldByWeek(req.params.start, req.params.end, function(err, result) {
+  } else if (req.params.type === '1') {
+    db.productsSoldByWeek(req.query.start, req.query.end, function(err, result) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(result);
+    });
+  } else if (req.params.type === '2') {
+    db.productsSoldByMonth(req.query.start, req.query.end, function(err, result) {
       if (err) {
         res.send(err);
       }
       res.json(result);
     });
   } else {
-    db.productsSoldByMonth(req.params.start, req.params.end, function(err, result) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(result);
-    });
+    throw new Error('incorrect request to productsSold');
   }
+
 };

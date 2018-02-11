@@ -11,7 +11,7 @@ connection.connect();
 
 module.exports.customerProductsByCategory = function(callback) {
   connection.query(`select customer_id, customer_first_name, category_id, category_name,
-  sum(quantity) as number_purchased from orders left join customers on
+  SUM(quantity) as number_purchased from orders left join customers on
   customers.id = orders.customer_id left join order_products on
   order_products.order_id = orders.id left join product_categories on
   product_categories.product_id = order_products.product_id left join categories on
@@ -49,8 +49,21 @@ module.exports.productsSoldByDay = function(start, end, callback) {
   });
 };
 
+/*
+for day, use DAY(date) function to return 1 thru 31 day of month
+
+? optional csv flag on the api? and export as csv format ?
+*/
+
 module.exports.productsSoldByWeek = function(start, end, callback) {
-  connection.query('xx', function(err, results, fields) {
+  connection.query(`select STR_TO_DATE(CONCAT(YEARWEEK(created_at,0), ' Sunday'), '%X%V %W')
+  as week_start_date, product_id, name, SUM(quantity) as quantity, COALESCE(sum(weight), 0)
+  as total_weight, COALESCE(measurement, '') as measurement from order_products left join
+  orders on order_id = orders.id left join products on product_id = products.id
+  WHERE created_at >= ${start} and created_at <= ${end}
+  group by week_start_date, product_id
+  order by week_start_date, product_id`,
+  function(err, results, fields) {
     if (err) {
       callback(err, null);
     } else {
@@ -58,14 +71,20 @@ module.exports.productsSoldByWeek = function(start, end, callback) {
     }
   });
 };
+/*
+select date(created_at), str_to_date(concat(yearweek(created_at,0), ' Sunday'), '%X%V %W')
+as week_name from order_products left join orders on order_id = orders.id;
+*/
 
 module.exports.productsSoldByMonth = function(start, end, callback) {
   connection.query(`select YEAR(created_at) as order_year, MONTHNAME(created_at) as
-  order_month, product_id, name, sum(quantity) as quantity,
-  COALESCE(sum(weight), 0) as total_weight, COALESCE(measurement, '') as measurement from order_products left join
-  orders on order_id = orders.id left join products on product_id = products.id
-  group by YEAR(created_at), MONTHNAME(created_at), product_id
-  order by YEAR(created_at), MONTHNAME(created_at), product_id`,
+  order_month, product_id, name, SUM(quantity) as quantity,
+  COALESCE(sum(weight), 0) as total_weight, COALESCE(measurement, '') as measurement
+  from order_products left join orders on order_id = orders.id
+  left join products on product_id = products.id
+  WHERE created_at >= ${start} and created_at <= ${end}
+  group by order_year, order_month, product_id
+  order by order_year, order_month, product_id`,
   function(err, results, fields) {
     if (err) {
       callback(err, null);
