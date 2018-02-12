@@ -27,7 +27,7 @@ exports.productsSold = function(req, res) {
         res.send(err);
       }
       if (req.query.csv === '1') {
-        exportToCSV(fields, result, res);
+        exportToCSV(fields, result, 'ByDay', res);
       } else {
         res.json(result);
       }
@@ -38,7 +38,7 @@ exports.productsSold = function(req, res) {
         res.send(err);
       }
       if (req.query.csv === '1') {
-        exportToCSV(fields, result, res);
+        exportToCSV(fields, result, 'ByWeek', res);
       } else {
         res.json(result);
       }
@@ -49,7 +49,7 @@ exports.productsSold = function(req, res) {
         res.send(err);
       }
       if (req.query.csv === '1') {
-        exportToCSV(fields, result, res);
+        exportToCSV(fields, result, 'ByMonth', res);
       } else {
         res.json(result);
       }
@@ -60,13 +60,13 @@ exports.productsSold = function(req, res) {
 
 };
 
-var exportToCSV = function(fields, result, res) {
+var exportToCSV = function(fields, result, format, res) {
   var headers = [];
   for (var i = 0; i < fields.length; i++) {
     headers.push(fields[i].name);
   }
   var csv = json2csv({data: result, fields: headers});
-  fs.writeFile(Date.now() + '.csv', csv, function(err) {
+  fs.writeFile(Date.now() + format + '.csv', csv, function(err) {
     if (err) throw err;
     console.log('file saved**********');
     res.json(result);
